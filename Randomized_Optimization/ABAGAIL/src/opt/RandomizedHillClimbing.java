@@ -8,17 +8,17 @@ import shared.Instance;
  * @version 1.0
  */
 public class RandomizedHillClimbing extends OptimizationAlgorithm {
-    
+
     /**
      * The current optimization data
      */
     private Instance cur;
-    
+
     /**
      * The current value of the data
      */
     private double curVal;
-    
+
     /**
      * Make a new randomized hill climbing
      */

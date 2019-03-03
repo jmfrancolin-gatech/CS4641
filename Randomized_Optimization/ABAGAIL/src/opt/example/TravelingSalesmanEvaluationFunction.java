@@ -1,6 +1,7 @@
 package opt.example;
 
 import opt.EvaluationFunction;
+import java.util.Arrays;
 
 /**
  * An evaluation function for the traveling salesman problem
@@ -17,6 +18,7 @@ public abstract class TravelingSalesmanEvaluationFunction implements EvaluationF
      * @param points the points at which the cities are located
      */
     public TravelingSalesmanEvaluationFunction(double[][] points) {
+
         distances = new double[points.length][];
         for (int i = 0; i < points.length; i++) {
             distances[i] = new double[i];
@@ -28,7 +30,7 @@ public abstract class TravelingSalesmanEvaluationFunction implements EvaluationF
             }
         }
     }
-    
+
     /**
      * Get the distance between two points
      * @param i the first point

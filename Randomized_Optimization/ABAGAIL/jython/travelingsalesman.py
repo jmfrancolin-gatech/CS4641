@@ -1,6 +1,6 @@
 # traveling salesman algorithm implementation in jython
 # This also prints the index of the points of the shortest route.
-# To make a plot of the route, write the points at these indexes 
+# To make a plot of the route, write the points at these indexes
 # to a file and plot them in your favorite tool.
 import sys
 import os
@@ -110,7 +110,7 @@ ef = TravelingSalesmanSortEvaluationFunction(points);
 fill = [N] * N
 ranges = array('i', fill)
 odd = DiscreteUniformDistribution(ranges);
-df = DiscreteDependencyTree(.1, ranges); 
+df = DiscreteDependencyTree(.1, ranges);
 pop = GenericProbabilisticOptimizationProblem(ef, odd, df);
 
 mimic = MIMIC(500, 100, pop)
