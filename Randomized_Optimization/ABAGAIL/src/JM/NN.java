@@ -18,10 +18,7 @@ import java.io.FileReader;
 import java.text.DecimalFormat;
 import java.util.*;
 
-/**
- * Created by osama on 3/6/16.
- */
-public class RA {
+public class NN {
 
     private static String[] labels;
     private static Set<String> unique_labels;
@@ -32,7 +29,7 @@ public class RA {
     //  These fields are hardcoded, depending on your problem
 
     //  Filename for your csv dataset
-    private static final String FILENAME = "JM/dataSet.csv";
+    private static final String FILENAME = "src/JM/dataSet.csv";
 
     //  How many examples your have
     private static int num_examples = 559;
@@ -74,6 +71,15 @@ public class RA {
 
     private static int HIDDEN_LAYER = 30;
 
+    // private static String[] filds = {"iterations", "test_error", "time"};
+    // private static CSVWriter writer_RHC = new CSVWriter("NN.csv", filds);
+
+    // private static FileWriter data_RHC = new FileWriter(new File("NN_RHC.csv"));
+    // private static CSVWriter writer_RHC = new CSVWriter(data_RHC);
+
+    // File file = new File("new.csv");
+    // FileWriter outputfile = new FileWriter(file);
+
 
     public static void main(String[] args) {
         initializeInstances();
@@ -82,14 +88,13 @@ public class RA {
         makeTestTrainSets();
         folds = kfolds(trainSet);
 
-        for (trainingIterations = 1000; trainingIterations <= 5000; trainingIterations = trainingIterations + 1000) {
-            runRHC();
-        }
+        for (trainingIterations = 500; trainingIterations <= 2000; trainingIterations = trainingIterations + 500) {
 
-        // runBackprop();
-            // runRHC();
-        // runSA();
-        // runGA();
+            runBackprop();
+            runRHC();
+            runSA();
+            runGA();
+        }
     }
 
   /**
@@ -413,7 +418,7 @@ public class RA {
 
             int layers[] = {num_attributes, HIDDEN_LAYER, HIDDEN_LAYER, HIDDEN_LAYER,
                 HIDDEN_LAYER, HIDDEN_LAYER, HIDDEN_LAYER, HIDDEN_LAYER, HIDDEN_LAYER,
-                HIDDEN_LAYER, HIDDEN_LAYER, HIDDEN_LAYER, HIDDEN_LAYER, outputLayer};
+                outputLayer};
 
             nets[i] = factory.createClassificationNetwork(layers);
 
@@ -427,7 +432,7 @@ public class RA {
             train(oas[i], nets[i], trainingIterations);
 
             validationErrors[i] = evaluateNetwork(backpropNet, validation);
-            System.out.printf("Fold: %d\tError: %f%%%n", i, validationErrors[i] * 100);
+            System.out.printf("Fold: %d\tError: %f%%%n", i+1, validationErrors[i] * 100);
             trainErrors[i] = evaluateNetwork(backpropNet, trainFolds);
         }
 
@@ -457,8 +462,15 @@ public class RA {
         // Convert nanoseconds to seconds
         time_elapsed /= Math.pow(10,9);
         System.out.printf("Time Elapsed: %s s %n", df.format(time_elapsed));
-    }
 
+        // List<String> row = Arrays.asList(Integer.toString(trainingIterations), Double.toString(testError), df.format(time_elapsed));
+        // writer_RHC.writeRow(row);
+
+        // String[] row = {Integer.toString(trainingIterations), Double.toString(testError), df.format(time_elapsed)};
+        // writer_RHC.writeNext(row);
+
+
+    }
 
   /**
    * Run simulated annealing
@@ -494,7 +506,7 @@ public class RA {
 
             int layers[] = {num_attributes, HIDDEN_LAYER, HIDDEN_LAYER, HIDDEN_LAYER,
                 HIDDEN_LAYER, HIDDEN_LAYER, HIDDEN_LAYER, HIDDEN_LAYER, HIDDEN_LAYER,
-                HIDDEN_LAYER, HIDDEN_LAYER, HIDDEN_LAYER, HIDDEN_LAYER, outputLayer};
+                outputLayer};
 
             nets[i] = factory.createClassificationNetwork(layers);
 
@@ -575,7 +587,7 @@ public class RA {
 
             int layers[] = {num_attributes, HIDDEN_LAYER, HIDDEN_LAYER, HIDDEN_LAYER,
                 HIDDEN_LAYER, HIDDEN_LAYER, HIDDEN_LAYER, HIDDEN_LAYER, HIDDEN_LAYER,
-                HIDDEN_LAYER, HIDDEN_LAYER, HIDDEN_LAYER, HIDDEN_LAYER, outputLayer};
+                outputLayer};
 
             nets[i] = factory.createClassificationNetwork(layers);
             nnops[i] = new NeuralNetworkOptimizationProblem(trnfoldsSet, nets[i], measure);
@@ -650,7 +662,7 @@ public class RA {
 
             int layers[] = {num_attributes, HIDDEN_LAYER, HIDDEN_LAYER, HIDDEN_LAYER,
                 HIDDEN_LAYER, HIDDEN_LAYER, HIDDEN_LAYER, HIDDEN_LAYER, HIDDEN_LAYER,
-                HIDDEN_LAYER, HIDDEN_LAYER, HIDDEN_LAYER, HIDDEN_LAYER, outputLayer};
+                outputLayer};
 
             nets[i] = factory.createClassificationNetwork(layers);
 

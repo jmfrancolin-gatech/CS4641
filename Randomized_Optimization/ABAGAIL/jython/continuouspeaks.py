@@ -34,45 +34,93 @@ import opt.prob.ProbabilisticOptimizationProblem as ProbabilisticOptimizationPro
 import shared.FixedIterationTrainer as FixedIterationTrainer
 import opt.example.ContinuousPeaksEvaluationFunction as ContinuousPeaksEvaluationFunction
 from array import array
-
-
+import csv
+import time
 
 """
 Commandline parameter(s):
    none
 """
 
-N=60
-T=N/10
-fill = [2] * N
-ranges = array('i', fill)
+T = [20, 50, 100]
+iterationsVec = [10000, 20000, 30000]
 
-ef = ContinuousPeaksEvaluationFunction(T)
-odd = DiscreteUniformDistribution(ranges)
-nf = DiscreteChangeOneNeighbor(ranges)
-mf = DiscreteChangeOneMutation(ranges)
-cf = SingleCrossOver()
-df = DiscreteDependencyTree(.1, ranges)
-hcp = GenericHillClimbingProblem(ef, odd, nf)
-gap = GenericGeneticAlgorithmProblem(ef, odd, mf, cf)
-pop = GenericProbabilisticOptimizationProblem(ef, odd, df)
 
-rhc = RandomizedHillClimbing(hcp)
-fit = FixedIterationTrainer(rhc, 200000)
-fit.train()
-print "RHC: " + str(ef.value(rhc.getOptimal()))
+# csv file for RHC
+data_RHC = open("ContinuousPeaks_RHC.csv",'w')
+wr_RHC = csv.writer(data_RHC, delimiter=",")
 
-sa = SimulatedAnnealing(1E11, .95, hcp)
-fit = FixedIterationTrainer(sa, 200000)
-fit.train()
-print "SA: " + str(ef.value(sa.getOptimal()))
+# csv file for SA
+data_SA = open("ContinuousPeaks_SA.csv",'w')
+wr_SA = csv.writer(data_SA, delimiter=",")
 
-ga = StandardGeneticAlgorithm(200, 100, 10, gap)
-fit = FixedIterationTrainer(ga, 1000)
-fit.train()
-print "GA: " + str(ef.value(ga.getOptimal()))
+# csv file for GA
+data_GA = open("ContinuousPeaks_GA.csv",'w')
+wr_GA = csv.writer(data_GA, delimiter=",")
 
-mimic = MIMIC(200, 20, pop)
-fit = FixedIterationTrainer(mimic, 1000)
-fit.train()
-print "MIMIC: " + str(ef.value(mimic.getOptimal()))
+# csv file for MIMIC
+data_MIMIC = open("ContinuousPeaks_MIMIC.csv",'w')
+wr_MIMIC = csv.writer(data_MIMIC, delimiter=",")
+
+for t in T:
+
+    fill = [2] * t
+    ranges = array('i', fill)
+
+    # isntanciate learners
+    ef = ContinuousPeaksEvaluationFunction(t)
+    odd = DiscreteUniformDistribution(ranges)
+    nf = DiscreteChangeOneNeighbor(ranges)
+    mf = DiscreteChangeOneMutation(ranges)
+    cf = SingleCrossOver()
+    df = DiscreteDependencyTree(.1, ranges)
+    hcp = GenericHillClimbingProblem(ef, odd, nf)
+    gap = GenericGeneticAlgorithmProblem(ef, odd, mf, cf)
+    pop = GenericProbabilisticOptimizationProblem(ef, odd, df)
+
+    for iterations in iterationsVec:
+
+        # RHC
+        print 'training RHC\tT = ' + str(t) + '\titerations = ' + str(iterations)
+        start = time.clock()
+        rhc = RandomizedHillClimbing(hcp)
+        fit = FixedIterationTrainer(rhc, iterations)
+        fit.train()
+        elapsed = time.clock() - start
+        # print "RHC: " + str(ef.value(rhc.getOptimal()))
+        row = [t, iterations, ef.value(rhc.getOptimal()), elapsed]
+        wr_RHC.writerows([row])
+
+
+        # SA
+        print 'training SA\tT = ' + str(t) + '\titerations = ' + str(iterations)
+        start = time.clock()
+        sa = SimulatedAnnealing(1E11, .95, hcp)
+        fit = FixedIterationTrainer(sa, iterations)
+        fit.train()
+        elapsed = time.clock() - start
+        # print "SA: " + str(ef.value(sa.getOptimal()))
+        row = [t, iterations, ef.value(sa.getOptimal()), elapsed]
+        wr_SA.writerows([row])
+
+        # GA
+        print 'training GA\tT = ' + str(t) +'\titerations = ' + str(iterations)
+        start = time.clock()
+        ga = StandardGeneticAlgorithm(200, 100, 10, gap)
+        fit = FixedIterationTrainer(ga, iterations)
+        fit.train()
+        elapsed = time.clock() - start
+        # print "GA: " + str(ef.value(ga.getOptimal()))
+        row = [t, iterations, ef.value(ga.getOptimal()), elapsed]
+        wr_GA.writerows([row])
+
+        # MIMIC
+        print 'training MIMIC\tT = ' + str(t) +'\titerations = ' + str(iterations)
+        start = time.clock()
+        mimic = MIMIC(200, 20, pop)
+        fit = FixedIterationTrainer(mimic, iterations)
+        fit.train()
+        elapsed = time.clock() - start
+        # print "MIMIC: " + str(ef.value(mimic.getOptimal()))
+        row = [t, iterations, ef.value(mimic.getOptimal()), elapsed]
+        wr_MIMIC.writerows([row])

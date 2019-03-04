@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Write arbitrary data to a CSV file.  This is used to write results out,
  * to be consumed by another program (GNUPlot, etc).
- * 
+ *
  * @author Jesse Rosalia <https://github.com/theJenix>
  * @date 2013-03-07
  *

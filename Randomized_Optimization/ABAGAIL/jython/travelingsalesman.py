@@ -1,7 +1,3 @@
-# traveling salesman algorithm implementation in jython
-# This also prints the index of the points of the shortest route.
-# To make a plot of the route, write the points at these indexes
-# to a file and plot them in your favorite tool.
 import sys
 import os
 import time
@@ -47,9 +43,8 @@ import shared.Instance as Instance
 import util.ABAGAILArrays as ABAGAILArrays
 
 from array import array
-
-
-
+import csv
+import time
 
 """
 Commandline parameter(s):
@@ -57,73 +52,117 @@ Commandline parameter(s):
 """
 
 # set N value.  This is the number of points
-N = 50
+N = [20, 50, 100]
+iterationsVec = [500, 1000, 2000, 3000]
 random = Random()
 
-points = [[0 for x in xrange(2)] for x in xrange(N)]
-for i in range(0, len(points)):
-    points[i][0] = random.nextDouble()
-    points[i][1] = random.nextDouble()
+# csv file for RHC
+data_RHC = open("TravelingSalesman_RHC.csv",'w')
+wr_RHC = csv.writer(data_RHC, delimiter=",")
 
-ef = TravelingSalesmanRouteEvaluationFunction(points)
-odd = DiscretePermutationDistribution(N)
-nf = SwapNeighbor()
-mf = SwapMutation()
-cf = TravelingSalesmanCrossOver(ef)
-hcp = GenericHillClimbingProblem(ef, odd, nf)
-gap = GenericGeneticAlgorithmProblem(ef, odd, mf, cf)
+# csv file for SA
+data_SA = open("TravelingSalesman_SA.csv",'w')
+wr_SA = csv.writer(data_SA, delimiter=",")
 
-rhc = RandomizedHillClimbing(hcp)
-fit = FixedIterationTrainer(rhc, 200000)
-fit.train()
-print "RHC Inverse of Distance: " + str(ef.value(rhc.getOptimal()))
-print "Route:"
-path = []
-for x in range(0,N):
-    path.append(rhc.getOptimal().getDiscrete(x))
-print path
+# csv file for GA
+data_GA = open("TravelingSalesman_GA.csv",'w')
+wr_GA = csv.writer(data_GA, delimiter=",")
 
-sa = SimulatedAnnealing(1E12, .999, hcp)
-fit = FixedIterationTrainer(sa, 200000)
-fit.train()
-print "SA Inverse of Distance: " + str(ef.value(sa.getOptimal()))
-print "Route:"
-path = []
-for x in range(0,N):
-    path.append(sa.getOptimal().getDiscrete(x))
-print path
+# csv file for GA
+data_MIMIC = open("TravelingSalesman_MIMIC.csv",'w')
+wr_MIMIC = csv.writer(data_MIMIC, delimiter=",")
 
+for n in N:
 
-ga = StandardGeneticAlgorithm(2000, 1500, 250, gap)
-fit = FixedIterationTrainer(ga, 1000)
-fit.train()
-print "GA Inverse of Distance: " + str(ef.value(ga.getOptimal()))
-print "Route:"
-path = []
-for x in range(0,N):
-    path.append(ga.getOptimal().getDiscrete(x))
-print path
+    # Compute points
+    points = [[0 for x in xrange(2)] for x in xrange(n)]
+    for i in range(0, len(points)):
+        points[i][0] = random.nextDouble()
+        points[i][1] = random.nextDouble()
 
+    # isntanciate learners
+    ef = TravelingSalesmanRouteEvaluationFunction(points)
+    odd = DiscretePermutationDistribution(n)
+    nf = SwapNeighbor()
+    mf = SwapMutation()
+    cf = TravelingSalesmanCrossOver(ef)
+    hcp = GenericHillClimbingProblem(ef, odd, nf)
+    gap = GenericGeneticAlgorithmProblem(ef, odd, mf, cf)
 
-# for mimic we use a sort encoding
-ef = TravelingSalesmanSortEvaluationFunction(points);
-fill = [N] * N
-ranges = array('i', fill)
-odd = DiscreteUniformDistribution(ranges);
-df = DiscreteDependencyTree(.1, ranges);
-pop = GenericProbabilisticOptimizationProblem(ef, odd, df);
+    for iterations in iterationsVec:
 
-mimic = MIMIC(500, 100, pop)
-fit = FixedIterationTrainer(mimic, 1000)
-fit.train()
-print "MIMIC Inverse of Distance: " + str(ef.value(mimic.getOptimal()))
-print "Route:"
-path = []
-optimal = mimic.getOptimal()
-fill = [0] * optimal.size()
-ddata = array('d', fill)
-for i in range(0,len(ddata)):
-    ddata[i] = optimal.getContinuous(i)
-order = ABAGAILArrays.indices(optimal.size())
-ABAGAILArrays.quicksort(ddata, order)
-print order
+        # RHC
+        print 'training RHC\tn = ' + str(n) + '\titerations = ' + str(iterations)
+        start = time.clock()
+        rhc = RandomizedHillClimbing(hcp)
+        fit = FixedIterationTrainer(rhc, iterations)
+        fit.train()
+        elapsed = time.clock() - start
+        # print "RHC Inverse of Distance: " + str(ef.value(rhc.getOptimal()))
+        # print "Route:"
+        # path = []
+        # for x in range(0,n):
+        #     path.append(rhc.getOptimal().getDiscrete(x))
+        # print path
+        row = [n, iterations, ef.value(rhc.getOptimal()), elapsed]
+        wr_RHC.writerows([row])
+
+        # SA
+        print 'training SA\tn = ' + str(n) + '\titerations = ' + str(iterations)
+        start = time.clock()
+        sa = SimulatedAnnealing(1E11, 0.95, hcp)
+        fit = FixedIterationTrainer(sa, iterations)
+        fit.train()
+        elapsed = time.clock() - start
+        # print "SA Inverse of Distance: " + str(ef.value(sa.getOptimal()))
+        # print "Route:"
+        # path = []
+        # for x in range(0,n):
+        #     path.append(sa.getOptimal().getDiscrete(x))
+        # print path
+        row = [n, iterations, ef.value(sa.getOptimal()), elapsed]
+        wr_SA.writerows([row])
+
+        # GA
+        print 'training GA\tn = ' + str(n) +'\titerations = ' + str(iterations)
+        start = time.clock()
+        ga = StandardGeneticAlgorithm(2000, 1500, 250, gap)
+        fit = FixedIterationTrainer(ga, iterations)
+        fit.train()
+        elapsed = time.clock() - start
+        # print "GA Inverse of Distance: " + str(ef.value(ga.getOptimal()))
+        # print "Route:"
+        # path = []
+        # for x in range(0,n):
+        #     path.append(ga.getOptimal().getDiscrete(x))
+        # print path
+        row = [n, iterations, ef.value(ga.getOptimal()), elapsed]
+        wr_GA.writerows([row])
+
+        # MIMIC
+        print 'training MIMIC\tn = ' + str(n) +'\titerations = ' + str(iterations)
+        start = time.clock()
+        ef = TravelingSalesmanSortEvaluationFunction(points);
+        fill = [n] * n
+        ranges = array('i', fill)
+        odd = DiscreteUniformDistribution(ranges);
+        df = DiscreteDependencyTree(.1, ranges);
+        pop = GenericProbabilisticOptimizationProblem(ef, odd, df);
+
+        mimic = MIMIC(500, 100, pop)
+        fit = FixedIterationTrainer(mimic, iterations)
+        fit.train()
+        elapsed = time.clock() - start
+        # print "MIMIC Inverse of Distance: " + str(ef.value(mimic.getOptimal()))
+        # print "Route:"
+        # path = []
+        # optimal = mimic.getOptimal()
+        # fill = [0] * optimal.size()
+        # ddata = array('d', fill)
+        # for i in range(0,len(ddata)):
+        #     ddata[i] = optimal.getContinuous(i)
+        # order = ABAGAILArrays.indices(optimal.size())
+        # ABAGAILArrays.quicksort(ddata, order)
+        # print order
+        row = [n, iterations, ef.value(mimic.getOptimal()), elapsed]
+        wr_MIMIC.writerows([row])
