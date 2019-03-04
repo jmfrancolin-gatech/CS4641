@@ -558,9 +558,9 @@ public class NN {
     public static void runGA() {
 
         // TODO: Tweak these params for GA
-        int populationSize = 200;
-        int toMate = 100;
-        int toMutate = 20;
+        int populationSize = 100;
+        int toMate = 30;
+        int toMutate = 10;
 
         System.out.println("===========Genetic Algorithms=========");
 
@@ -585,9 +585,7 @@ public class NN {
             // nets[i] = factory.createClassificationNetwork(
             //     new int[] {inputLayer, hiddenLayer, outputLayer});
 
-            int layers[] = {num_attributes, HIDDEN_LAYER, HIDDEN_LAYER, HIDDEN_LAYER,
-                HIDDEN_LAYER, HIDDEN_LAYER, HIDDEN_LAYER, HIDDEN_LAYER, HIDDEN_LAYER,
-                outputLayer};
+            int layers[] = {num_attributes, HIDDEN_LAYER / 5, HIDDEN_LAYER / 5, outputLayer};
 
             nets[i] = factory.createClassificationNetwork(layers);
             nnops[i] = new NeuralNetworkOptimizationProblem(trnfoldsSet, nets[i], measure);

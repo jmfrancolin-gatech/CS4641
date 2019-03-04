@@ -1,0 +1,200 @@
+===========Backprop=========
+Number of iterations: 500
+Fold: 1 Error: 14.606742%
+Fold: 2 Error: 15.730337%
+Fold: 3 Error: 16.853933%
+Fold: 4 Error: 14.606742%
+Fold: 5 Error: 11.494253%
+
+Convergence in 500 iterations
+
+Min Validation Error: 11.494253%
+Training Error: 0.000000%
+Test Error: 2.460850%
+Time Elapsed: 39.207 s
+===========Randomized Hill Climbing=========
+Number of iterations: 500
+Fold: 1 Error: 32.584270%
+Fold: 2 Error: 32.584270%
+Fold: 3 Error: 48.314607%
+Fold: 4 Error: 52.808989%
+Fold: 5 Error: 36.781609%
+
+Min Validation Error: 32.584270%
+Training Error: 37.570621%
+Test Error: 36.912752%
+Time Elapsed: 59.689 s
+===========Simulated Annealing=========
+Number of iterations: 500
+Fold: 1 Error: 39.325843%
+Fold: 2 Error: 50.561798%
+Fold: 3 Error: 44.943820%
+Fold: 4 Error: 48.314607%
+Fold: 5 Error: 52.873563%
+
+Min Validation Error: 39.325843%
+Training Error: 47.457627%
+Test Error: 46.085011%
+Time Elapsed: 51.858 s
+===========Genetic Algorithms=========
+Number of iterations: 500
+Fold: 1 Error: 37.078652%
+Fold: 2 Error: 46.067416%
+Fold: 3 Error: 39.325843%
+Fold: 4 Error: 49.438202%
+Fold: 5 Error: 47.126437%
+
+Min Validation Error: 37.078652%
+Training Error: 46.892655%
+Test Error: 44.742729%
+Time Elapsed: 215.139 s
+===========Backprop=========
+Number of iterations: 1000
+Fold: 1 Error: 7.865169%
+Fold: 2 Error: 10.112360%
+Fold: 3 Error: 10.112360%
+Fold: 4 Error: 11.235955%
+Fold: 5 Error: 9.195402%
+
+Convergence in 1000 iterations
+
+Min Validation Error: 7.865169%
+Training Error: 0.282486%
+Test Error: 1.789709%
+Time Elapsed: 34.505 s
+===========Randomized Hill Climbing=========
+Number of iterations: 1000
+Fold: 1 Error: 30.337079%
+Fold: 2 Error: 32.584270%
+Fold: 3 Error: 40.449438%
+Fold: 4 Error: 22.471910%
+Fold: 5 Error: 37.931034%
+
+Min Validation Error: 22.471910%
+Training Error: 29.661017%
+Test Error: 28.187919%
+Time Elapsed: 103.325 s
+===========Simulated Annealing=========
+Number of iterations: 1000
+Fold: 1 Error: 56.179775%
+Fold: 2 Error: 51.685393%
+Fold: 3 Error: 44.943820%
+Fold: 4 Error: 52.808989%
+Fold: 5 Error: 52.873563%
+
+Min Validation Error: 44.943820%
+Training Error: 47.740113%
+Test Error: 47.203579%
+Time Elapsed: 102.501 s
+===========Genetic Algorithms=========
+Number of iterations: 1000
+Fold: 1 Error: 57.303371%
+Fold: 2 Error: 49.438202%
+Fold: 3 Error: 42.696629%
+Fold: 4 Error: 51.685393%
+Fold: 5 Error: 47.126437%
+
+Min Validation Error: 42.696629%
+Training Error: 47.457627%
+Test Error: 46.532438%
+Time Elapsed: 367.462 s
+===========Backprop=========
+Number of iterations: 1500
+Fold: 1 Error: 10.112360%
+Fold: 2 Error: 11.235955%
+Fold: 3 Error: 11.235955%
+Fold: 4 Error: 14.606742%
+Fold: 5 Error: 6.896552%
+
+Convergence in 1500 iterations
+
+Min Validation Error: 6.896552%
+Training Error: 0.000000%
+Test Error: 1.342282%
+Time Elapsed: 34.308 s
+===========Randomized Hill Climbing=========
+Number of iterations: 1500
+Fold: 1 Error: 23.595506%
+Fold: 2 Error: 25.842697%
+Fold: 3 Error: 34.831461%
+Fold: 4 Error: 22.471910%
+Fold: 5 Error: 31.034483%
+
+Min Validation Error: 22.471910%
+Training Error: 18.361582%
+Test Error: 19.463087%
+Time Elapsed: 148.900 s
+===========Simulated Annealing=========
+Number of iterations: 1500
+Fold: 1 Error: 44.943820%
+Fold: 2 Error: 49.438202%
+Fold: 3 Error: 55.056180%
+Fold: 4 Error: 48.314607%
+Fold: 5 Error: 45.977011%
+
+Min Validation Error: 44.943820%
+Training Error: 48.022599%
+Test Error: 47.427293%
+Time Elapsed: 156.189 s
+===========Genetic Algorithms=========
+Number of iterations: 1500
+Fold: 1 Error: 42.696629%
+Fold: 2 Error: 48.314607%
+Fold: 3 Error: 44.943820%
+Fold: 4 Error: 50.561798%
+Fold: 5 Error: 47.126437%
+
+Min Validation Error: 42.696629%
+Training Error: 48.305085%
+Test Error: 47.203579%
+Time Elapsed: 565.946 s
+===========Backprop=========
+Number of iterations: 2000
+Fold: 1 Error: 6.741573%
+Fold: 2 Error: 11.235955%
+Fold: 3 Error: 10.112360%
+Fold: 4 Error: 12.359551%
+Fold: 5 Error: 5.747126%
+
+Convergence in 2000 iterations
+
+Min Validation Error: 5.747126%
+Training Error: 0.000000%
+Test Error: 1.118568%
+Time Elapsed: 32.291 s
+===========Randomized Hill Climbing=========
+Number of iterations: 2000
+Fold: 1 Error: 17.977528%
+Fold: 2 Error: 31.460674%
+Fold: 3 Error: 26.966292%
+Fold: 4 Error: 19.101124%
+Fold: 5 Error: 28.735632%
+
+Min Validation Error: 17.977528%
+Training Error: 22.033898%
+Test Error: 21.029083%
+Time Elapsed: 219.373 s
+===========Simulated Annealing=========
+Number of iterations: 2000
+Fold: 1 Error: 57.303371%
+Fold: 2 Error: 59.550562%
+Fold: 3 Error: 44.943820%
+Fold: 4 Error: 51.685393%
+Fold: 5 Error: 52.873563%
+
+Min Validation Error: 44.943820%
+Training Error: 47.740113%
+Test Error: 47.203579%
+Time Elapsed: 209.994 s
+===========Genetic Algorithms=========
+Number of iterations: 2000
+Fold: 1 Error: 46.067416%
+Fold: 2 Error: 48.314607%
+Fold: 3 Error: 43.820225%
+Fold: 4 Error: 51.685393%
+Fold: 5 Error: 45.977011%
+
+Min Validation Error: 43.820225%
+Training Error: 45.762712%
+Test Error: 45.190157%
+Time Elapsed: 747.227 s
